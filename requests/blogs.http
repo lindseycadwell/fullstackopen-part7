@@ -1,0 +1,39 @@
+GET http://localhost:8000/api/blogs/
+
+###
+
+GET http://localhost:8000/api/blogs/609191c6c3b8920c6ceb74dd
+
+###
+
+POST http://localhost:8000/api/blogs/ HTTP/1.1
+content-type: application/json
+authorization:  bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3R1c2VybmFtZSIsImlkIjoiNjA4YjM3ZWI4ZWU1YzUzNDU0YTFjNjE5IiwiaWF0IjoxNjIwOTMwNDM2LCJleHAiOjE2MjA5NjY0MzZ9.QP-VvP8mewoDUIFa7XHckTOHfJ4JTA0f0N1XhVZpclY
+
+{
+    "title": "testtitle2",
+    "author": "testauthor",
+    "url": "www.testurl.com",
+    "likes": 3
+}
+
+###
+
+PUT http://localhost:8000/api/blogs/609d8f6af003de2978dc4530
+content-type: application/json
+authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3R1c2VybmFtZSIsImlkIjoiNjA4YjM3ZWI4ZWU1YzUzNDU0YTFjNjE5IiwiaWF0IjoxNjIwOTQ4ODk5LCJleHAiOjE2MjA5ODQ4OTl9.0_thS5SUwp7KbFX3STNovfBwMY_hV37wHDQzNMN4AI8
+
+{
+    "title": "taco",
+    "author": "taco",
+    "url": "taco",
+    "likes": 420
+}
+
+###
+
+DELETE http://localhost:8000/api/blogs/608c859d0def91360052bd99
+
+###
+
+DELETE http://localhost:8000/api/blogs/

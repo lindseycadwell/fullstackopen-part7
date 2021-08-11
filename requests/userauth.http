@@ -1,0 +1,24 @@
+GET http://localhost:8000/api/users/
+
+###
+
+POST http://localhost:8000/api/auth/register HTTP/1.1
+content-type: application/json
+
+{
+    "username": "user",
+    "name": "namez",
+    "password": "pass"
+}
+
+###
+
+POST http://localhost:8000/api/auth/login HTTP/1.1
+content-type: application/json
+
+{
+    "username": "testusername",
+    "password": "testpassword"
+}
+
+###
