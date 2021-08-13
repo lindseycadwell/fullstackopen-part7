@@ -1,4 +1,6 @@
 const envIsTest = process.env.NODE_ENV === "test";
+
+const runTestLogs = false;
 const level = 5;
 
 const debug = (...params) => {
@@ -26,13 +28,13 @@ const error = (...params) => {
 };
 
 const request = (...params) => {
-  if (level >= 1) {
+  if (!envIsTest && level >= 1) {
     console.log(...params);
   }
 };
 
 const test = (...params) => {
-  if (envIsTest) {
+  if (envIsTest && runTestLogs) {
     console.log(...params);
   }
 };

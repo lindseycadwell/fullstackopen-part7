@@ -76,7 +76,6 @@ const login = async (req, res) => {
   };
   const token = jwt.sign(userForToken, config.SECRET, { expiresIn: 600 * 60 });
 
-  console.log("user :>> ", user);
   const data = { token, username: user.username, name: user.name, id: user.id };
 
   return res.status(200).json(resGen.success(data));
