@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Switch, Route } from "react-router-dom";
 
 import blogService from "./services/blogs";
 import authService from "./services/auth";
@@ -8,6 +9,7 @@ import Navbar from "./components/Navbar";
 import NewBlogForm from "./components/NewBlogForm";
 import BlogList from "./components/BlogList";
 import LoginForm from "./components/LoginForm";
+import Footer from "./components/Footer";
 
 import "./App.css";
 
@@ -204,19 +206,23 @@ const App = () => {
 
   return (
     <>
-      <Navbar />
-      <span>Logged in as {user.name} </span>
-      <button onClick={handleLogout}>Logout</button>
-      <h2>blogs</h2>
-      {successNotification && <div>{successNotification}</div>}
-      {failureNotification && <div>{failureNotification}</div>}
-      <BlogList
-        blogs={blogs}
-        handleLike={handleLike}
-        handleDelete={handleDelete}
-        user={user}
-      />
-      {newBlogForm()}
+      <Navbar usersName={user.name} handleLogout={handleLogout} />
+      <main>
+        <h2>blogs</h2>
+        {successNotification && <div>{successNotification}</div>}
+        {failureNotification && <div>{failureNotification}</div>}
+        <BlogList
+          blogs={blogs}
+          handleLike={handleLike}
+          handleDelete={handleDelete}
+          user={user}
+        />
+        {newBlogForm()}
+      </main>
+      <Switch>
+        <Route exact path="/login" component={LoginForm} />
+      </Switch>
+      <Footer />
     </>
   );
 };

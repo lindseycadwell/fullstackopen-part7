@@ -1,5 +1,6 @@
 .nav {
   margin: 10px;
+  display: flex;
 }
 
 .nav__list {
