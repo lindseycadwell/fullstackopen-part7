@@ -7,11 +7,10 @@ import helpers from "./helpers";
 
 import NewBlogForm from "./components/NewBlogForm";
 import Blog from "./components/Blog";
+import LoginForm from "./components/LoginForm";
 
 const App = () => {
   const [blogs, setBlogs] = useState([]);
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
   const [user, setUser] = useState(null);
   const [successNotification, setSuccessNotification] = useState(null);
   const [failureNotification, setFailureNotification] = useState(null);
@@ -36,8 +35,7 @@ const App = () => {
     }
   }, []);
 
-  const handleLogin = async (evt) => {
-    evt.preventDefault();
+  const handleLogin = async (username, password) => {
     console.log("logging in with", username, password);
 
     try {
@@ -65,8 +63,6 @@ const App = () => {
       blogService.setToken(userRes.data.token);
 
       setUser(userRes.data);
-      setUsername("");
-      setPassword("");
     } catch (exception) {
       /* setErrorMessage("Wrong credentials");
       setTimeout(() => {
@@ -135,36 +131,6 @@ const App = () => {
     );
   };
 
-  const loginForm = () => {
-    return (
-      <form onSubmit={handleLogin}>
-        <div>
-          username
-          <input
-            type="text"
-            value={username}
-            name="Username"
-            id="usernameInput"
-            onChange={({ target }) => setUsername(target.value)}
-          />
-        </div>
-        <div>
-          password
-          <input
-            type="password"
-            value={password}
-            name="Password"
-            id="passwordInput"
-            onChange={({ target }) => setPassword(target.value)}
-          />
-        </div>
-        <button type="submit" id="loginButton">
-          login
-        </button>
-      </form>
-    );
-  };
-
   const handleNotification = (input) => {
     const { success, message, duration } = input;
 
@@ -228,7 +194,7 @@ const App = () => {
       <div>
         <h2>Log in to application</h2>
         {failureNotification && <div>{failureNotification}</div>}
-        {loginForm()}
+        <LoginForm handleLogin={handleLogin} />
       </div>
     );
   }
