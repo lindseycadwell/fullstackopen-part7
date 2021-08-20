@@ -6,8 +6,9 @@ import authService from "./services/auth";
 import helpers from "./helpers";
 
 import Navbar from "./components/Navbar";
-import NewBlogForm from "./components/NewBlogForm";
+import Notification from "./components/Notification";
 import BlogList from "./components/BlogList";
+import NewBlogForm from "./components/NewBlogForm";
 import LoginForm from "./components/LoginForm";
 import Footer from "./components/Footer";
 
@@ -187,8 +188,10 @@ const App = () => {
     <>
       <Navbar usersName={user.name} handleLogout={handleLogout} />
       <main>
-        {successNotification && <div>{successNotification}</div>}
-        {failureNotification && <div>{failureNotification}</div>}
+        <Notification
+          successNotification={successNotification}
+          failureNotification={failureNotification}
+        />
         <Switch>
           <Route
             exact
