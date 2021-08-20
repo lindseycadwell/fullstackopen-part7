@@ -1,0 +1,21 @@
+.nav {
+  margin: 10px;
+}
+
+.nav__list {
+  display: flex;
+  list-style: none;
+}
+
+.nav__listItem {
+  padding: 4px;
+  margin-right: 10px;
+}
+
+.nav__listItem > a {
+  text-decoration: none;
+}
+
+.nav__listItem > a:hover {
+  border-bottom: 1px solid black;
+}

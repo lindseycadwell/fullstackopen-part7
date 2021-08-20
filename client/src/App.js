@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from "react";
-//import { useDispatch, useSelect } from "react-redux";
 
 import blogService from "./services/blogs";
 import authService from "./services/auth";
 import helpers from "./helpers";
 
+import Navbar from "./components/Navbar";
 import NewBlogForm from "./components/NewBlogForm";
 import BlogList from "./components/BlogList";
 import LoginForm from "./components/LoginForm";
+
+import "./App.css";
 
 const App = () => {
   const [blogs, setBlogs] = useState([]);
@@ -202,11 +204,12 @@ const App = () => {
 
   return (
     <>
+      <Navbar />
+      <span>Logged in as {user.name} </span>
+      <button onClick={handleLogout}>Logout</button>
       <h2>blogs</h2>
       {successNotification && <div>{successNotification}</div>}
       {failureNotification && <div>{failureNotification}</div>}
-      <span>Logged in as {user.name} </span>
-      <button onClick={handleLogout}>Logout</button>
       <BlogList
         blogs={blogs}
         handleLike={handleLike}
