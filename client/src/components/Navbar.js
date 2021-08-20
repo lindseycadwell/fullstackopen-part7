@@ -8,10 +8,10 @@ const Navbar = ({ usersName, handleLogout }) => {
     <nav className={styles.nav}>
       <ul className={styles.nav__list}>
         <li className={styles.nav__listItem}>
-          <Link to="/newblogform">New Blog</Link>
+          <Link to="/">Blogs</Link>
         </li>
         <li className={styles.nav__listItem}>
-          <Link to="/bloglist">Blogs</Link>
+          <Link to="/newblog">Create New Blog</Link>
         </li>
         <li className={styles.nav__listItem}>
           <Link to="/login">Login</Link>

@@ -18,7 +18,6 @@ const App = () => {
   const [user, setUser] = useState(null);
   const [successNotification, setSuccessNotification] = useState(null);
   const [failureNotification, setFailureNotification] = useState(null);
-  const [newBlogVisible, setNewBlogVisible] = useState(false);
 
   useEffect(() => {
     blogService.getAll().then((blogs) => {
@@ -111,28 +110,8 @@ const App = () => {
         duration: 5000,
       });
     }
-    setNewBlogVisible(false);
 
     refreshBlogs();
-  };
-
-  const newBlogForm = () => {
-    const hideWhenVisible = { display: newBlogVisible ? "none" : "" };
-    const showWhenVisible = { display: newBlogVisible ? "" : "none" };
-
-    return (
-      <div>
-        <div style={hideWhenVisible}>
-          <button onClick={() => setNewBlogVisible(true)}>
-            create new blog
-          </button>
-        </div>
-        <div style={showWhenVisible}>
-          <NewBlogForm handleNewBlog={handleNewBlog} />
-          <button onClick={() => setNewBlogVisible(false)}>cancel</button>
-        </div>
-      </div>
-    );
   };
 
   const handleNotification = (input) => {
@@ -208,20 +187,30 @@ const App = () => {
     <>
       <Navbar usersName={user.name} handleLogout={handleLogout} />
       <main>
-        <h2>blogs</h2>
         {successNotification && <div>{successNotification}</div>}
         {failureNotification && <div>{failureNotification}</div>}
-        <BlogList
-          blogs={blogs}
-          handleLike={handleLike}
-          handleDelete={handleDelete}
-          user={user}
-        />
-        {newBlogForm()}
+        <Switch>
+          <Route
+            exact
+            path="/"
+            render={() => (
+              <BlogList
+                blogs={blogs}
+                handleLike={handleLike}
+                handleDelete={handleDelete}
+                user={user}
+              />
+            )}
+          />
+          <Route exact path="/login" component={LoginForm} />
+          <Route
+            exact
+            path="/newblog"
+            render={() => <NewBlogForm handleNewBlog={handleNewBlog} />}
+          />
+        </Switch>
       </main>
-      <Switch>
-        <Route exact path="/login" component={LoginForm} />
-      </Switch>
+
       <Footer />
     </>
   );
