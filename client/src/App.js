@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+//import { useDispatch, useSelect } from "react-redux";
 
 import blogService from "./services/blogs";
 import authService from "./services/auth";
@@ -257,5 +258,3 @@ const App = () => {
 };
 
 export default App;
-
-/* <p>Logged in as {user.name}</p> */
