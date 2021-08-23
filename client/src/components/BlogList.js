@@ -1,8 +1,12 @@
 import React from "react";
 
 import Blog from "./Blog";
+import { useSelector } from "react-redux";
+import { selectCurrentUser } from "../slices/currentUserSlice";
 
-const BlogList = ({ blogs, handleLike, handleDelete, user }) => {
+const BlogList = ({ blogs, handleLike, handleDelete }) => {
+  const user = useSelector(selectCurrentUser);
+
   return (
     <>
       <h2>Blogs</h2>

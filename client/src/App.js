@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { Switch, Route } from "react-router-dom";
 
 import blogService from "./services/blogs";
-import authService from "./services/auth";
 import helpers from "./helpers";
 
 import Navbar from "./components/Navbar";
@@ -16,7 +15,6 @@ import "./App.css";
 
 const App = () => {
   const [blogs, setBlogs] = useState([]);
-  const [user, setUser] = useState(null);
   const [successNotification, setSuccessNotification] = useState(null);
   const [failureNotification, setFailureNotification] = useState(null);
 
@@ -29,7 +27,7 @@ const App = () => {
     });
   }, []);
 
-  useEffect(() => {
+  /* useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem("loggedBlogappUser");
     if (loggedUserJSON) {
       const userObject = JSON.parse(loggedUserJSON);
@@ -37,55 +35,12 @@ const App = () => {
       setUser(userObject);
       blogService.setToken(userObject.token);
     }
-  }, []);
+  }, []); */
 
-  const handleLogin = async (username, password) => {
-    console.log("logging in with", username, password);
-
-    try {
-      const userRes = await authService.login({
-        username,
-        password,
-      });
-
-      console.log("userRes :>> ", userRes);
-      console.log("userRes.data.username :>> ", userRes.data.username);
-
-      if (!userRes.success) {
-        console.log(userRes);
-        return handleNotification({
-          success: false,
-          message: "Error: invalid username or password",
-          duration: 5000,
-        });
-      }
-
-      window.localStorage.setItem(
-        "loggedBlogappUser",
-        JSON.stringify(userRes.data)
-      );
-      blogService.setToken(userRes.data.token);
-
-      setUser(userRes.data);
-    } catch (exception) {
-      /* setErrorMessage("Wrong credentials");
-      setTimeout(() => {
-        setErrorMessage(null);
-      }, 5000); */
-      console.log("Error logging in: ", exception);
-
-      return handleNotification({
-        success: false,
-        message: "Error: invalid username or password",
-        duration: 5000,
-      });
-    }
-  };
-
-  const handleLogout = () => {
+  /* const handleLogout = () => {
     window.localStorage.removeItem("loggedBlogappUser");
     setUser(null);
-  };
+  }; */
 
   const handleNewBlog = async ({ title, author, url }) => {
     const newBlog = {
@@ -173,7 +128,7 @@ const App = () => {
     return;
   };
 
-  if (user === null) {
+  /* if (user === null) {
     return (
       <div>
         <h2>Log in to application</h2>
@@ -182,11 +137,11 @@ const App = () => {
       </div>
     );
   }
-  console.log("user in app.js before return :>> ", user);
+  console.log("user in app.js before return :>> ", user); */
 
   return (
     <>
-      <Navbar usersName={user.name} handleLogout={handleLogout} />
+      <Navbar />
       <main>
         <Notification
           successNotification={successNotification}
@@ -201,11 +156,10 @@ const App = () => {
                 blogs={blogs}
                 handleLike={handleLike}
                 handleDelete={handleDelete}
-                user={user}
               />
             )}
           />
-          <Route exact path="/login" component={LoginForm} />
+          <Route exact path="/login" render={() => <LoginForm />} />
           <Route
             exact
             path="/newblog"
