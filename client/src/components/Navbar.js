@@ -15,6 +15,11 @@ const Navbar = () => {
   const isAuthenticated = useSelector(selectIsAuthenticated);
   console.log("user :>> ", user);
 
+  const onLogout = () => {
+    window.localStorage.removeItem("loggedBlogappUser");
+    dispatch(logout());
+  };
+
   return (
     <nav className={styles.nav}>
       <ul className={styles.nav__list}>
@@ -31,9 +36,7 @@ const Navbar = () => {
         )}
       </ul>
       {isAuthenticated && <span>Logged in as {user.name} </span>}
-      {isAuthenticated && (
-        <button onClick={() => dispatch(logout())}>Logout</button>
-      )}
+      {isAuthenticated && <button onClick={onLogout}>Logout</button>}
     </nav>
   );
 };

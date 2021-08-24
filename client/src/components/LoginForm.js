@@ -60,6 +60,11 @@ const LoginForm = () => {
       const resultAction = await dispatch(login({ username, password }));
       unwrapResult(resultAction);
 
+      window.localStorage.setItem(
+        "loggedBlogappUser",
+        JSON.stringify(resultAction.payload)
+      );
+
       setUsername("");
       setPassword("");
     } catch (error) {

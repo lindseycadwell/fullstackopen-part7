@@ -1,11 +1,20 @@
-const success = (data) => ({
-  success: true,
-  data,
-});
+const success = (data) => {
+  const returnObject = {
+    success: true,
+    data,
+  };
 
-const error = (error) => ({
-  success: false,
-  error,
-});
+  console.log("returnObject :>> ", returnObject);
+
+  return returnObject;
+};
+
+const error = (error) => {
+  console.log("error in generateResponse() :>> ", error);
+  return {
+    success: false,
+    error,
+  };
+};
 
 module.exports = { success, error };

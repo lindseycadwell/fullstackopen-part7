@@ -1,18 +1,29 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { unwrapResult } from "@reduxjs/toolkit";
 
-function NewBlogForm({ handleNewBlog }) {
+import { createBlog } from "../slices/blogsSlice";
+
+function NewBlogForm() {
+  const dispatch = useDispatch();
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
   const [url, setUrl] = useState("");
 
-  const createNewBlog = (evt) => {
+  const createNewBlog = async (evt) => {
     evt.preventDefault();
 
-    handleNewBlog({ title: title, author: author, url: url });
+    dispatch(createBlog());
 
-    setTitle("");
-    setAuthor("");
-    setUrl("");
+    try {
+      const resultAction = await dispatch(createBlog({ title, author, url }));
+      unwrapResult(resultAction);
+      setTitle("");
+      setAuthor("");
+      setUrl("");
+    } catch (err) {
+      console.error("Failed to save the blog: ", err);
+    }
   };
 
   return (

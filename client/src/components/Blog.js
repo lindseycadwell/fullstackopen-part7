@@ -1,24 +1,19 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
+import { useSelector } from "react-redux";
 
-const Blog = ({ blog, handleLike, handleDelete, userId }) => {
-  const blogStyle = {
-    paddingTop: 10,
-    paddingLeft: 2,
-    border: "solid",
-    borderWidth: 1,
-    marginBottom: 5,
-  };
+import { selectCurrentUser } from "../slices/currentUserSlice";
+import { selectBlogById } from "../slices/blogsSlice";
 
-  const buttonStyle = {
-    marginLeft: 7,
-  };
-
+const Blog = ({ blogId }) => {
   const [isExpanded, setIsExpanded] = useState(false);
+
+  const blog = useSelector((state) => selectBlogById(state, blogId));
+  const user = useSelector(selectCurrentUser);
 
   const buttonText = isExpanded ? "hide" : "view";
 
-  const userOwnsBlog = userId === blog.user.id;
+  const userOwnsBlog = user ? user.userId === blog.user.id : false;
   const removeStyle = { display: userOwnsBlog ? "" : "none" };
 
   if (!isExpanded) {
@@ -49,7 +44,7 @@ const Blog = ({ blog, handleLike, handleDelete, userId }) => {
           style={buttonStyle}
           id="likeButton"
           className="like-button"
-          onClick={() => handleLike(blog)}
+          onClick={() => "handleLike(blog)"}
         >
           like
         </button>
@@ -58,7 +53,7 @@ const Blog = ({ blog, handleLike, handleDelete, userId }) => {
           style={removeStyle}
           id="deleteButton"
           className="delete-button"
-          onClick={() => handleDelete(blog)}
+          onClick={() => "handleDelete"}
         >
           remove
         </button>
@@ -68,10 +63,19 @@ const Blog = ({ blog, handleLike, handleDelete, userId }) => {
 };
 
 Blog.propTypes = {
-  blog: PropTypes.object,
-  handleLike: PropTypes.func.isRequired,
-  handleDelete: PropTypes.func.isRequired,
-  userId: PropTypes.string.isRequired,
+  blogId: PropTypes.string.isRequired,
 };
 
 export default Blog;
+
+const blogStyle = {
+  paddingTop: 10,
+  paddingLeft: 2,
+  border: "solid",
+  borderWidth: 1,
+  marginBottom: 5,
+};
+
+const buttonStyle = {
+  marginLeft: 7,
+};
