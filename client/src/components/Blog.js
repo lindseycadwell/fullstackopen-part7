@@ -13,7 +13,8 @@ const Blog = ({ blogId }) => {
 
   const buttonText = isExpanded ? "hide" : "view";
 
-  const userOwnsBlog = user ? user.userId === blog.user.id : false;
+  const userOwnsBlog = user ? user.id === blog.user.id : false;
+
   const removeStyle = { display: userOwnsBlog ? "" : "none" };
 
   if (!isExpanded) {

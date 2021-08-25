@@ -20,9 +20,8 @@ const App = () => {
   const { isAuthenticated } = useAuth();
 
   useEffect(() => {
-    console.log("app.js useEffect()");
     const loggedUserJSON = window.localStorage.getItem("loggedBlogappUser");
-    console.log("loggedUserJSON :>> ", loggedUserJSON);
+
     if (loggedUserJSON) {
       const userObject = JSON.parse(loggedUserJSON);
       dispatch(loadUser(userObject));
