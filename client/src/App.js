@@ -10,13 +10,14 @@ import LoginForm from "./components/LoginForm";
 import Footer from "./components/Footer";
 
 import blogService from "./services/blogs";
-
 import { loadUser } from "./slices/currentUserSlice";
-
+import useAuth from "./hooks/useAuth";
+import ProtectedRoute from "./utilities/ProtectedRoute";
 import "./App.css";
 
 const App = () => {
   const dispatch = useDispatch();
+  const { isAuthenticated } = useAuth();
 
   useEffect(() => {
     console.log("app.js useEffect()");
@@ -92,8 +93,15 @@ const App = () => {
         {/* <Notification /> */}
         <Switch>
           <Route exact path="/" render={() => <BlogList />} />
+
           <Route exact path="/login" render={() => <LoginForm />} />
-          <Route exact path="/newblog" render={() => <NewBlogForm />} />
+          <ProtectedRoute
+            exact
+            isAuthenticated={isAuthenticated}
+            path="/newblog"
+          >
+            <NewBlogForm />
+          </ProtectedRoute>
         </Switch>
       </main>
 
