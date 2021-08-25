@@ -13,14 +13,27 @@ const BlogList = () => {
 
   const blogIds = useSelector(selectBlogIds);
 
-  return (
-    <>
-      <h2>Blogs</h2>
+  const renderedBlogs = () => {
+    if (blogIds.length === 0) {
+      return (
+        <ul>
+          <li>No blogs!</li>
+        </ul>
+      );
+    }
+    return (
       <ul>
         {blogIds.map((blogId) => (
           <Blog key={blogId} blogId={blogId} />
         ))}
       </ul>
+    );
+  };
+
+  return (
+    <>
+      <h2>Blogs</h2>
+      {renderedBlogs()}
     </>
   );
 };

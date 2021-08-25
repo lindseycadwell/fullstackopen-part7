@@ -1,14 +1,35 @@
-/* eslint-disable indent */
 import React from "react";
+import { useSelector } from "react-redux";
 
-const Notification = ({ successNotification, failureNotification }) => {
-  const notification = successNotification
-    ? successNotification
-    : failureNotification
-    ? failureNotification
-    : null;
+import {
+  selectNotificationContent,
+  selectNotificationType,
+} from "../slices/notificationSlice";
 
-  return <>{notification && <div>{notification}</div>}</>;
+const Notification = () => {
+  const notificationContent = useSelector(selectNotificationContent);
+  const notificationType = useSelector(selectNotificationType);
+
+  const styles =
+    notificationType === "success"
+      ? successNotificationStyles
+      : failureNotificationStyles;
+
+  return notificationContent ? (
+    <div style={styles}>{notificationContent}</div>
+  ) : null;
 };
 
 export default Notification;
+
+const successNotificationStyles = {
+  border: "3px solid #00FF00",
+  padding: "5px",
+  marginBottom: "15px",
+};
+
+const failureNotificationStyles = {
+  border: "3px solid #FF0000",
+  padding: "5px",
+  marginBottom: "15px",
+};

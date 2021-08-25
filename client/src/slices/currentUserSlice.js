@@ -39,7 +39,6 @@ const currentUserSlice = createSlice({
     [login.fulfilled]: (state, action) => {
       console.log("action :>> ", action);
       state.user = action.payload;
-      state.isAuthenticated = true;
     },
     [login.rejected]: (state, action) => {
       console.log("action :>> ", action);

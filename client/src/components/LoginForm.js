@@ -4,11 +4,11 @@ import { useDispatch } from "react-redux";
 import { unwrapResult } from "@reduxjs/toolkit";
 
 import { login } from "../slices/currentUserSlice";
+import { setNotificationWithTimeout } from "../slices/notificationSlice";
 
 const LoginForm = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [loginAttemptStatus, setLoginAttemptStatus] = useState("idle");
   const [redirectToReferrer, setRedirectToReferrer] = useState(false);
 
   const dispatch = useDispatch();
@@ -19,8 +19,6 @@ const LoginForm = () => {
     e.preventDefault();
 
     try {
-      setLoginAttemptStatus("pending");
-
       const resultAction = await dispatch(login({ username, password }));
       unwrapResult(resultAction);
 
@@ -30,45 +28,48 @@ const LoginForm = () => {
       );
 
       setRedirectToReferrer(true);
+      dispatch(
+        setNotificationWithTimeout({
+          content: "Login successful",
+          type: "success",
+        })
+      );
     } catch (error) {
       console.error("Failed to log in: ", error);
     }
   };
 
   if (redirectToReferrer) {
-    return <Redirect to={state.from || "/"} />;
+    return <Redirect to={state?.from || "/"} />;
   }
 
   return (
-    <>
-      <form onSubmit={onLoginFormSubmitted}>
-        <h2>Login to the application</h2>
-        <div>
-          username
-          <input
-            type="text"
-            value={username}
-            name="Username"
-            id="usernameInput"
-            onChange={({ target }) => setUsername(target.value)}
-          />
-        </div>
-        <div>
-          password
-          <input
-            type="password"
-            value={password}
-            name="Password"
-            id="passwordInput"
-            onChange={({ target }) => setPassword(target.value)}
-          />
-        </div>
-        <button type="submit" id="loginButton">
-          login
-        </button>
-      </form>
-      {loginAttemptStatus === "pending" && <div>Logging in...</div>}
-    </>
+    <form onSubmit={onLoginFormSubmitted}>
+      <h2>Login to the application</h2>
+      <div>
+        username
+        <input
+          type="text"
+          value={username}
+          name="Username"
+          id="usernameInput"
+          onChange={({ target }) => setUsername(target.value)}
+        />
+      </div>
+      <div>
+        password
+        <input
+          type="password"
+          value={password}
+          name="Password"
+          id="passwordInput"
+          onChange={({ target }) => setPassword(target.value)}
+        />
+      </div>
+      <button type="submit" id="loginButton">
+        login
+      </button>
+    </form>
   );
 };
 

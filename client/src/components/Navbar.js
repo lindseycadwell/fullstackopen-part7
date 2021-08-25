@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 
 import { logout } from "../slices/currentUserSlice";
+import { setNotificationWithTimeout } from "../slices/notificationSlice";
 import useAuth from "../hooks/useAuth";
 import styles from "./Navbar.module.css";
 
@@ -13,6 +14,12 @@ const Navbar = () => {
   const onLogout = () => {
     window.localStorage.removeItem("loggedBlogappUser");
     dispatch(logout());
+    dispatch(
+      setNotificationWithTimeout({
+        content: "You have logged out",
+        type: "success",
+      })
+    );
   };
 
   return (

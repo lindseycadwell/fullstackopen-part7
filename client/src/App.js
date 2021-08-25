@@ -3,7 +3,7 @@ import { Switch, Route } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
 import Navbar from "./components/Navbar";
-//import Notification from "./components/Notification";
+import Notification from "./components/Notification";
 import BlogList from "./components/BlogList";
 import NewBlogForm from "./components/NewBlogForm";
 import LoginForm from "./components/LoginForm";
@@ -89,7 +89,7 @@ const App = () => {
     <>
       <Navbar />
       <main>
-        {/* <Notification /> */}
+        <Notification />
         <Switch>
           <Route exact path="/" render={() => <BlogList />} />
 

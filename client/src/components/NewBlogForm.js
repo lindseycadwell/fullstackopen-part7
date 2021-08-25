@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { unwrapResult } from "@reduxjs/toolkit";
 
 import { createBlog } from "../slices/blogsSlice";
+import { setNotificationWithTimeout } from "../slices/notificationSlice";
 
 function NewBlogForm() {
   const dispatch = useDispatch();
@@ -18,11 +19,26 @@ function NewBlogForm() {
     try {
       const resultAction = await dispatch(createBlog({ title, author, url }));
       unwrapResult(resultAction);
+
+      dispatch(
+        setNotificationWithTimeout({
+          content: `Added new blog: ${title}`,
+          type: "success",
+        })
+      );
+
       setTitle("");
       setAuthor("");
       setUrl("");
     } catch (err) {
       console.error("Failed to save the blog: ", err);
+
+      dispatch(
+        setNotificationWithTimeout({
+          content: `Failed to add new blog: ${title}`,
+          type: "failure",
+        })
+      );
     }
   };
 
