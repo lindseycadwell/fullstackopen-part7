@@ -1,55 +1,19 @@
 import React, { useState } from "react";
+import { Redirect, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { unwrapResult } from "@reduxjs/toolkit";
 
 import { login } from "../slices/currentUserSlice";
 
 const LoginForm = () => {
-  const dispatch = useDispatch();
-
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loginAttemptStatus, setLoginAttemptStatus] = useState("idle");
+  const [redirectToReferrer, setRedirectToReferrer] = useState(false);
 
-  /*  const onLoginFormSubmitted2 = async (e) => {
-    e.preventDefault();
+  const dispatch = useDispatch();
 
-    try {
-      const userRes = await authService.login({
-        username,
-        password,
-      });
-
-      console.log("userRes :>> ", userRes);
-      console.log("userRes.data.username :>> ", userRes.data.username);
-
-      if (!userRes.success) {
-        console.log(userRes);
-        return handleNotification({
-          success: false,
-          message: "Error: invalid username or password",
-          duration: 5000,
-        });
-      }
-
-      window.localStorage.setItem(
-        "loggedBlogappUser",
-        JSON.stringify(userRes.data)
-      );
-      blogService.setToken(userRes.data.token);
-
-      setUser(userRes.data);
-    } catch (exception) {
-      console.log("Error logging in: ", exception);
-
-      return handleNotification({
-        success: false,
-        message: "Error: invalid username or password",
-        duration: 5000,
-      });
-    }
-  };
- */
+  const { state } = useLocation();
 
   const onLoginFormSubmitted = async (e) => {
     e.preventDefault();
@@ -65,14 +29,15 @@ const LoginForm = () => {
         JSON.stringify(resultAction.payload)
       );
 
-      setUsername("");
-      setPassword("");
+      setRedirectToReferrer(true);
     } catch (error) {
       console.error("Failed to log in: ", error);
-    } finally {
-      setLoginAttemptStatus("idle");
     }
   };
+
+  if (redirectToReferrer) {
+    return <Redirect to={state.from || "/"} />;
+  }
 
   return (
     <>
