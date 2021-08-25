@@ -7,7 +7,6 @@ import {
 import authService from "../services/auth";
 
 const initialState = {
-  isAuthenticated: false, // | true
   user: null, // | {id, username, name, token}
   error: null, // | String
 };
@@ -30,11 +29,9 @@ const currentUserSlice = createSlice({
   initialState,
   reducers: {
     loadUser: (state, action) => {
-      state.isAuthenticated = true;
       state.user = action.payload;
     },
     logout: (state) => {
-      state.isAuthenticated = false;
       state.user = null;
     },
   },
@@ -55,10 +52,12 @@ export const { loadUser, logout } = currentUserSlice.actions;
 
 export default currentUserSlice.reducer;
 
-export const selectIsAuthenticated = (state) =>
-  state.currentUser.isAuthenticated;
-
 export const selectCurrentUser = createSelector(
   (state) => state.currentUser.user,
   (user) => user
+);
+
+export const selectErrorFromCurrentUser = createSelector(
+  (state) => state.currentUser.error,
+  (error) => error
 );

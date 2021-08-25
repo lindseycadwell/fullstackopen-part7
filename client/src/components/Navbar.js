@@ -1,19 +1,14 @@
 import React from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 
-import {
-  selectCurrentUser,
-  selectIsAuthenticated,
-  logout,
-} from "../slices/currentUserSlice";
+import { logout } from "../slices/currentUserSlice";
+import useAuth from "../hooks/useAuth";
 import styles from "./Navbar.module.css";
 
 const Navbar = () => {
   const dispatch = useDispatch();
-  const user = useSelector(selectCurrentUser);
-  const isAuthenticated = useSelector(selectIsAuthenticated);
-  console.log("user :>> ", user);
+  const { isAuthenticated, currentUser: user } = useAuth();
 
   const onLogout = () => {
     window.localStorage.removeItem("loggedBlogappUser");

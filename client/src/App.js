@@ -89,10 +89,7 @@ const App = () => {
     <>
       <Navbar />
       <main>
-        {/* <Notification
-          successNotification={successNotification}
-          failureNotification={failureNotification}
-        /> */}
+        {/* <Notification /> */}
         <Switch>
           <Route exact path="/" render={() => <BlogList />} />
           <Route exact path="/login" render={() => <LoginForm />} />
