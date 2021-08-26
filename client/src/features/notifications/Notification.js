@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import {
   selectNotificationContent,
   selectNotificationType,
-} from "../slices/notificationSlice";
+} from "./notificationSlice";
 
 const Notification = () => {
   const notificationContent = useSelector(selectNotificationContent);

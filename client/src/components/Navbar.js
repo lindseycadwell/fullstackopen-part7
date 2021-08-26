@@ -2,8 +2,8 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 
-import { logout } from "../slices/currentUserSlice";
-import { setNotificationWithTimeout } from "../slices/notificationSlice";
+import { logout } from "../features/auth/currentUserSlice";
+import { setNotificationWithTimeout } from "../features/notifications/notificationSlice";
 import useAuth from "../hooks/useAuth";
 import styles from "./Navbar.module.css";
 

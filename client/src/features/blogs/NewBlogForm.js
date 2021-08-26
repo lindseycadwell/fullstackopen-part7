@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { unwrapResult } from "@reduxjs/toolkit";
 
-import { createBlog } from "../slices/blogsSlice";
-import { setNotificationWithTimeout } from "../slices/notificationSlice";
+import { createBlog } from "./blogsSlice";
+import { setNotificationWithTimeout } from "../notifications/notificationSlice";
 
 function NewBlogForm() {
   const dispatch = useDispatch();

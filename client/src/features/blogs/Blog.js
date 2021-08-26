@@ -2,8 +2,8 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 
-import { selectCurrentUser } from "../slices/currentUserSlice";
-import { selectBlogById } from "../slices/blogsSlice";
+import { selectCurrentUser } from "../auth/currentUserSlice";
+import { selectBlogById } from "./blogsSlice";
 
 const Blog = () => {
   const { blogId } = useParams();

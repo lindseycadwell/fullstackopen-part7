@@ -2,9 +2,9 @@ import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 
-import useAsyncEffect from "../hooks/useAsyncEffect";
+import useAsyncEffect from "../../hooks/useAsyncEffect";
 
-import { fetchBlogs, selectAllBlogs } from "../slices/blogsSlice";
+import { fetchBlogs, selectAllBlogs } from "./blogsSlice";
 
 const BlogList = () => {
   const dispatch = useDispatch();

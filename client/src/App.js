@@ -3,15 +3,15 @@ import { Switch, Route } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
 import Navbar from "./components/Navbar";
-import Notification from "./components/Notification";
-import BlogList from "./components/BlogList";
-import Blog from "./components/Blog";
-import NewBlogForm from "./components/NewBlogForm";
-import LoginForm from "./components/LoginForm";
+import Notification from "./features/notifications/Notification";
+import BlogList from "./features/blogs/BlogList";
+import Blog from "./features/blogs/Blog";
+import NewBlogForm from "./features/blogs/NewBlogForm";
+import LoginForm from "./features/auth/LoginForm";
 import Footer from "./components/Footer";
 
-import blogService from "./services/blogs";
-import { loadUser } from "./slices/currentUserSlice";
+import blogService from "./features/blogs/blogService";
+import { loadUser } from "./features/auth/currentUserSlice";
 import useAuth from "./hooks/useAuth";
 import ProtectedRoute from "./utilities/ProtectedRoute";
 import "./App.css";

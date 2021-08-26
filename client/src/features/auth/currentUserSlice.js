@@ -4,7 +4,7 @@ import {
   createSelector,
 } from "@reduxjs/toolkit";
 
-import authService from "../services/auth";
+import authService from "./authService";
 
 const initialState = {
   user: null, // | {id, username, name, token}

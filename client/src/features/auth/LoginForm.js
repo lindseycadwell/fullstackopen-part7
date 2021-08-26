@@ -3,8 +3,8 @@ import { Redirect, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { unwrapResult } from "@reduxjs/toolkit";
 
-import { login } from "../slices/currentUserSlice";
-import { setNotificationWithTimeout } from "../slices/notificationSlice";
+import { login } from "./currentUserSlice";
+import { setNotificationWithTimeout } from "../notifications/notificationSlice";
 
 const LoginForm = () => {
   const [username, setUsername] = useState("");
