@@ -1,20 +1,21 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 
 import useAsyncEffect from "../hooks/useAsyncEffect";
 
-import { fetchBlogs, selectBlogIds } from "../slices/blogsSlice";
-import Blog from "./Blog";
+import { fetchBlogs, selectAllBlogs } from "../slices/blogsSlice";
 
 const BlogList = () => {
   const dispatch = useDispatch();
 
   useAsyncEffect(() => dispatch(fetchBlogs()), [dispatch]);
 
-  const blogIds = useSelector(selectBlogIds);
+  const blogs = useSelector(selectAllBlogs);
+  console.log("blogs :>> ", blogs);
 
   const renderedBlogs = () => {
-    if (blogIds.length === 0) {
+    if (blogs.length === 0) {
       return (
         <ul>
           <li>No blogs!</li>
@@ -23,8 +24,10 @@ const BlogList = () => {
     }
     return (
       <ul>
-        {blogIds.map((blogId) => (
-          <Blog key={blogId} blogId={blogId} />
+        {blogs.map((blog) => (
+          <li key={blog.id}>
+            <Link to={`/blogs/${blog.id}`}>{blog.title}</Link>
+          </li>
         ))}
       </ul>
     );

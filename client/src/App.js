@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import Navbar from "./components/Navbar";
 import Notification from "./components/Notification";
 import BlogList from "./components/BlogList";
+import Blog from "./components/Blog";
 import NewBlogForm from "./components/NewBlogForm";
 import LoginForm from "./components/LoginForm";
 import Footer from "./components/Footer";
@@ -92,6 +93,7 @@ const App = () => {
         <Notification />
         <Switch>
           <Route exact path="/" render={() => <BlogList />} />
+          <Route exact path="/blogs/:blogId" component={Blog} />
 
           <Route exact path="/login" render={() => <LoginForm />} />
           <ProtectedRoute
