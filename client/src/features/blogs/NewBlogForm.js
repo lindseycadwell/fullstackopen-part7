@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { unwrapResult } from "@reduxjs/toolkit";
+import { useHistory } from "react-router-dom";
 
 import { createBlog } from "./blogsSlice";
 import { setNotificationWithTimeout } from "../notifications/notificationSlice";
 
 function NewBlogForm() {
   const dispatch = useDispatch();
+  const history = useHistory();
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
   const [url, setUrl] = useState("");
@@ -20,16 +22,13 @@ function NewBlogForm() {
       const resultAction = await dispatch(createBlog({ title, author, url }));
       unwrapResult(resultAction);
 
+      history.push("/");
       dispatch(
         setNotificationWithTimeout({
           content: `Added new blog: ${title}`,
           type: "success",
         })
       );
-
-      setTitle("");
-      setAuthor("");
-      setUrl("");
     } catch (err) {
       console.error("Failed to save the blog: ", err);
 

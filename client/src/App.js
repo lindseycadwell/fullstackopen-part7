@@ -30,29 +30,6 @@ const App = () => {
     }
   }, []);
 
-  /* const handleLogout = () => {
-    window.localStorage.removeItem("loggedBlogappUser");
-    setUser(null);
-  }; */
-
-  /* const handleNotification = (input) => {
-    const { success, message, duration } = input;
-
-    if (success) {
-      setSuccessNotification(message);
-      setTimeout(() => {
-        setSuccessNotification(null);
-      }, duration);
-    } else {
-      setFailureNotification(message);
-      setTimeout(() => {
-        setFailureNotification(null);
-      }, duration);
-    }
-
-    return;
-  }; */
-
   /* const handleLike = (blog) => {
     console.log("pressed like button on blog: ");
     console.log("blog :>> ", blog);

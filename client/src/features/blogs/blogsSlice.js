@@ -29,12 +29,31 @@ export const createBlog = createAsyncThunk(
     return res;
   }
 );
+
+export const updateBlog = createAsyncThunk("blogs/updateBlog", async (blog) => {
+  const res = await blogService.updateOne(blog);
+  console.log(res);
+  return res;
+});
+
+export const deleteBlog = createAsyncThunk(
+  "blogs/deleteBlog",
+  async (blogId) => {
+    const res = await blogService.deleteOne(blogId);
+    console.log(res);
+    return res;
+  }
+);
+
 const blogsSlice = createSlice({
   name: "blogs",
   initialState,
   reducers: {},
   extraReducers: {
     [fetchBlogs.fulfilled]: blogsAdapter.setAll,
+    [createBlog.fulfilled]: blogsAdapter.addOne,
+    [updateBlog.fulfilled]: blogsAdapter.upsertOne,
+    [deleteBlog.fulfilled]: blogsAdapter.deleteOne,
   },
 });
 

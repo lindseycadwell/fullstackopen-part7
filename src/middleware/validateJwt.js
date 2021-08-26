@@ -6,6 +6,8 @@ const logger = require("../utils/logger");
 const validateJwt = (req, res, next) => {
   logger.loc("in middleware.validateJwt()");
 
+  console.log("req.token :>> ", req.token);
+
   const decodedToken = jwt.verify(req.token, config.SECRET);
 
   if (!req.token || !decodedToken.id) {

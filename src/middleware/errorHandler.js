@@ -12,7 +12,7 @@ const errorHandler = (error, req, res, next) => {
   } else if (error.name === "JsonWebTokenError") {
     return res.status(401).json({ error: "Invalid token." });
   } else if (error.name === "TokenExpiredError") {
-    return res.status(401).json(genRes("Token expired."));
+    return res.status(401).json({ error: "Token expired." });
   }
   next(error);
 };

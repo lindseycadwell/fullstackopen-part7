@@ -34,16 +34,15 @@ const updateOne = async (updatedBlogObject) => {
   return res.data.data;
 };
 
-const deleteOne = async (deleteBlogObject) => {
-  console.log("token :>> ", token);
+const deleteOne = async (blogId) => {
+  console.log("token in blogService.deleteOne() :>> ", token);
   const config = {
     headers: { authorization: token },
   };
-  const deleteUrl = `${baseUrl}/${deleteBlogObject.id}`;
+  const deleteUrl = `${baseUrl}/${blogId}`;
 
   const res = await axios.delete(deleteUrl, config);
-
-  return res;
+  console.log("res :>> ", res);
 };
 
 export default { setToken, getAll, createOne, updateOne, deleteOne };

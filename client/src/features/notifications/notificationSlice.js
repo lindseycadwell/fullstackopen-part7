@@ -18,7 +18,7 @@ export function setNotificationWithTimeout({ content, type }) {
 
     setTimeout(() => {
       dispatch(notificationSlice.actions.clearNotification({ id }));
-    }, 3000);
+    }, 5000);
   };
 }
 
