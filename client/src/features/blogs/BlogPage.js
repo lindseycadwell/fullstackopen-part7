@@ -6,8 +6,10 @@ import { useParams, useHistory } from "react-router-dom";
 import { selectCurrentUser } from "../auth/currentUserSlice";
 import { updateBlog, deleteBlog, selectBlogById } from "./blogsSlice";
 import { setNotificationWithTimeout } from "../notifications/notificationSlice";
+import BlogCommentForm from "./BlogCommentForm";
+import BlogCommentsList from "./BlogCommentsList";
 
-const Blog = () => {
+const BlogPage = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const { blogId } = useParams();
@@ -71,34 +73,40 @@ const Blog = () => {
   };
 
   return (
-    <div style={blogStyle} className="blog-item">
-      <span>
-        {blog.title} by {blog.author}
-      </span>
-      <p>{blog.url}</p>
-      <span>likes: {blog.likes}</span>
-      <button
-        style={buttonStyle}
-        id="likeButton"
-        className="like-button"
-        onClick={onLikeButtonClicked}
-      >
-        like
-      </button>
-      <p>{blog.user.name}</p>
-      <button
-        style={removeStyle}
-        id="deleteButton"
-        className="delete-button"
-        onClick={onDeleteButtonClicked}
-      >
-        remove
-      </button>
-    </div>
+    <>
+      <div style={blogStyle} className="blog-item">
+        <span>
+          {blog.title} by {blog.author}
+        </span>
+        <p>{blog.url}</p>
+        <span>likes: {blog.likes}</span>
+        <button
+          style={buttonStyle}
+          id="likeButton"
+          className="like-button"
+          onClick={onLikeButtonClicked}
+        >
+          like
+        </button>
+        <p>{blog.user.name}</p>
+        <button
+          style={removeStyle}
+          id="deleteButton"
+          className="delete-button"
+          onClick={onDeleteButtonClicked}
+        >
+          remove
+        </button>
+      </div>
+
+      <h3>Comments:</h3>
+      <BlogCommentsList comments={blog.comments} />
+      <BlogCommentForm blogId={blogId} />
+    </>
   );
 };
 
-export default Blog;
+export default BlogPage;
 
 const blogStyle = {
   paddingTop: 10,

@@ -31,6 +31,9 @@ const Navbar = () => {
         <li className={styles.nav__listItem}>
           <Link to="/newblog">Create New Blog</Link>
         </li>
+        <li className={styles.nav__listItem}>
+          <Link to="/users">Users</Link>
+        </li>
         {!isAuthenticated && (
           <li className={styles.nav__listItem}>
             <Link to="/login">Login</Link>

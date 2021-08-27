@@ -2,16 +2,17 @@ import {
   createSlice,
   createAsyncThunk,
   createEntityAdapter,
+  nanoid,
 } from "@reduxjs/toolkit";
 
-import blogService from "./blogService";
+import blogsService from "./blogsService";
 
 const blogsAdapter = createEntityAdapter();
 
 const initialState = blogsAdapter.getInitialState();
 
 export const fetchBlogs = createAsyncThunk("blogs/fetchBlogs", async () => {
-  const res = await blogService.getAll();
+  const res = await blogsService.getAll();
   return res;
 });
 
@@ -24,14 +25,14 @@ export const createBlog = createAsyncThunk(
       url: url,
     };
 
-    const res = await blogService.createOne(newBlog);
+    const res = await blogsService.createOne(newBlog);
     console.log(res);
     return res;
   }
 );
 
 export const updateBlog = createAsyncThunk("blogs/updateBlog", async (blog) => {
-  const res = await blogService.updateOne(blog);
+  const res = await blogsService.updateOne(blog);
   console.log(res);
   return res;
 });
@@ -39,7 +40,7 @@ export const updateBlog = createAsyncThunk("blogs/updateBlog", async (blog) => {
 export const deleteBlog = createAsyncThunk(
   "blogs/deleteBlog",
   async (blogId) => {
-    const res = await blogService.deleteOne(blogId);
+    const res = await blogsService.deleteOne(blogId);
     console.log(res);
     return blogId;
   }
@@ -48,7 +49,31 @@ export const deleteBlog = createAsyncThunk(
 const blogsSlice = createSlice({
   name: "blogs",
   initialState,
-  reducers: {},
+  reducers: {
+    addBlogComment: {
+      reducer: (state, action) => {
+        const { blogId, comment } = action.payload;
+
+        state.entities[blogId].comments
+          ? state.entities[blogId].comments.push(comment)
+          : (state.entities[blogId].comments = [comment]);
+      },
+      prepare({ blogId, comment }) {
+        const { name, content } = comment;
+
+        return {
+          payload: {
+            blogId,
+            comment: {
+              id: nanoid(),
+              name,
+              content,
+            },
+          },
+        };
+      },
+    },
+  },
   extraReducers: {
     [fetchBlogs.fulfilled]: blogsAdapter.setAll,
     [createBlog.fulfilled]: blogsAdapter.addOne,
@@ -56,6 +81,8 @@ const blogsSlice = createSlice({
     [deleteBlog.fulfilled]: blogsAdapter.removeOne,
   },
 });
+
+export const { addBlogComment } = blogsSlice.actions;
 
 export default blogsSlice.reducer;
 

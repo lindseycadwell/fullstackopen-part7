@@ -5,13 +5,16 @@ import { useDispatch } from "react-redux";
 import Navbar from "./components/Navbar";
 import Notification from "./features/notifications/Notification";
 import BlogList from "./features/blogs/BlogList";
-import Blog from "./features/blogs/Blog";
+import BlogPage from "./features/blogs/BlogPage";
+import UsersList from "./features/users/UsersList";
+import UserPage from "./features/users/UserPage";
 import NewBlogForm from "./features/blogs/NewBlogForm";
 import LoginForm from "./features/auth/LoginForm";
 import Footer from "./components/Footer";
 
-import blogService from "./features/blogs/blogService";
+import blogsService from "./features/blogs/blogsService";
 import { fetchBlogs } from "./features/blogs/blogsSlice";
+import { fetchUsers } from "./features/users/usersSlice";
 import { loadUser } from "./features/auth/currentUserSlice";
 import useAuth from "./hooks/useAuth";
 import useAsyncEffect from "./hooks/useAsyncEffect";
@@ -28,44 +31,12 @@ const App = () => {
     if (loggedUserJSON) {
       const userObject = JSON.parse(loggedUserJSON);
       dispatch(loadUser(userObject));
-      blogService.setToken(userObject.token);
+      blogsService.setToken(userObject.token);
     }
   }, []);
 
   useAsyncEffect(() => dispatch(fetchBlogs()), [dispatch]);
-
-  /* const handleLike = (blog) => {
-    console.log("pressed like button on blog: ");
-    console.log("blog :>> ", blog);
-
-    let updatedBlog = blog;
-    updatedBlog.likes = blog.likes + 1;
-
-    blogService.updateOne(updatedBlog).then((blog) => {
-      console.log("updated blog :>> ", blog);
-
-      refreshBlogs();
-    });
-
-    return;
-  }
-
-  const handleDelete = (blog) => {
-    console.log("delete blog > ", blog);
-
-    blogService
-      .deleteOne(blog)
-      .then((res) => {
-        console.log("res :>> ", res);
-        refreshBlogs();
-      })
-      .catch((err) => {
-        console.log("error :>> ", err);
-      });
-
-    return;
-  };
- */
+  useAsyncEffect(() => dispatch(fetchUsers()), [dispatch]);
 
   return (
     <>
@@ -74,7 +45,9 @@ const App = () => {
         <Notification />
         <Switch>
           <Route exact path="/" render={() => <BlogList />} />
-          <Route exact path="/blogs/:blogId" component={Blog} />
+          <Route exact path="/blogs/:blogId" component={BlogPage} />
+          <Route exact path="/users" render={() => <UsersList />} />
+          <Route exact path="/users/:userId" component={UserPage} />
 
           <Route exact path="/login" render={() => <LoginForm />} />
           <ProtectedRoute
