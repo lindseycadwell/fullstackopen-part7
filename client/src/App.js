@@ -11,8 +11,10 @@ import LoginForm from "./features/auth/LoginForm";
 import Footer from "./components/Footer";
 
 import blogService from "./features/blogs/blogService";
+import { fetchBlogs } from "./features/blogs/blogsSlice";
 import { loadUser } from "./features/auth/currentUserSlice";
 import useAuth from "./hooks/useAuth";
+import useAsyncEffect from "./hooks/useAsyncEffect";
 import ProtectedRoute from "./utilities/ProtectedRoute";
 import "./App.css";
 
@@ -29,6 +31,8 @@ const App = () => {
       blogService.setToken(userObject.token);
     }
   }, []);
+
+  useAsyncEffect(() => dispatch(fetchBlogs()), [dispatch]);
 
   /* const handleLike = (blog) => {
     console.log("pressed like button on blog: ");

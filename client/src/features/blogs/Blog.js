@@ -13,10 +13,9 @@ const Blog = () => {
   const { blogId } = useParams();
 
   const blog = useSelector((state) => selectBlogById(state, blogId));
+  const user = useSelector(selectCurrentUser);
 
   if (!blog) return <div>404: Blog not found...</div>;
-
-  const user = useSelector(selectCurrentUser);
 
   const userOwnsBlog = user ? user.id === blog.user.id : false;
 

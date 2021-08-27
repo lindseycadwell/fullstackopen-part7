@@ -41,7 +41,7 @@ export const deleteBlog = createAsyncThunk(
   async (blogId) => {
     const res = await blogService.deleteOne(blogId);
     console.log(res);
-    return res;
+    return blogId;
   }
 );
 
@@ -53,7 +53,7 @@ const blogsSlice = createSlice({
     [fetchBlogs.fulfilled]: blogsAdapter.setAll,
     [createBlog.fulfilled]: blogsAdapter.addOne,
     [updateBlog.fulfilled]: blogsAdapter.upsertOne,
-    [deleteBlog.fulfilled]: blogsAdapter.deleteOne,
+    [deleteBlog.fulfilled]: blogsAdapter.removeOne,
   },
 });
 
